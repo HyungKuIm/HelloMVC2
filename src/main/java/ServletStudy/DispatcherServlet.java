@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 
 @WebServlet("*.do")
@@ -53,15 +54,15 @@ public class DispatcherServlet extends ViewBaseServlet {
 					Object[] parameterValues = new Object[parameters.length];
 					for (int i=0; i<parameters.length; i++) {
 						Parameter parameter = parameters[i];
-						String parameterName = parameter.getName();
-						if ("request".equals(parameterName)) {
+						Class<?> parameterType = parameter.getType(); // 매개변수 타입 가져오기
+						if (HttpServletRequest.class.isAssignableFrom(parameterType)) {
 							parameterValues[i] = request;
-						} else if ("response".equals(parameterName)) {
+						} else if (HttpServletResponse.class.isAssignableFrom(parameterType)) {
 							parameterValues[i] = response;
-						} else if ("session".equals(parameterName)) {
+						} else if (HttpSession.class.isAssignableFrom(parameterType)) {
 							parameterValues[i] = request.getSession();
 						} else {
-							String parameterValue = request.getParameter(parameterName);
+							String parameterValue = request.getParameter(parameter.getName());
 							String typeName = parameter.getType().getName();
 							Object parameterObj = parameterValue;
 							if (parameterObj != null) {
