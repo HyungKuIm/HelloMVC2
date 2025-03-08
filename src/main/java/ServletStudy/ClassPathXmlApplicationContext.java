@@ -2,6 +2,7 @@ package ServletStudy;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +50,31 @@ public class ClassPathXmlApplicationContext implements BeanFactory{
 					
 				}
 			}
+
+			for (int i=0; i<beanNodeList.getLength(); i++) {
+				Node beanNode = beanNodeList.item(i);
+				if (beanNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element beanElement = (Element) beanNode;
+					String beanId = beanElement.getAttribute("id");
+					NodeList childNodes = beanElement.getChildNodes();
+					for (int j=0; j<childNodes.getLength(); j++) {
+						Node childNode = childNodes.item(j);
+						if (childNode.getNodeType() == Node.ELEMENT_NODE
+								&& childNode.getNodeName().equals("property")) {
+							Element propertyElement = (Element) childNode;
+							String propertyName = propertyElement.getAttribute("name");
+							String propertyRef = propertyElement.getAttribute("ref");
+
+							Object refObj = beanMap.get(propertyRef);
+							Object beanObj = beanMap.get(beanId);
+							Class<?> beanClass = beanObj.getClass();
+							Field propertyField = beanClass.getDeclaredField(propertyName);
+							propertyField.setAccessible(true);
+							propertyField.set(beanObj, refObj);
+						}
+					}
+				}
+			}
 			
 			
 			
@@ -61,13 +87,13 @@ public class ClassPathXmlApplicationContext implements BeanFactory{
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	}
+		} catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
 	
 	@Override
 	public Object getBean(String id) {

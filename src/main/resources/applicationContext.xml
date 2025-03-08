@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
 	<bean id="hello" class="com.oraclejava.hellomvc2.controllers.HelloController" />
+	<bean id="music" class="com.oraclejava.hellomvc2.controllers.MusicController">
+			<property name="musicService" ref="musicService" />
+	</bean>
+
+
+	<bean id="musicService" class="com.oraclejava.hellomvc2.services.MusicDaoImpl" />
 </beans>
