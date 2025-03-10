@@ -62,15 +62,15 @@ public class DispatcherServlet extends ViewBaseServlet {
 						} else if (HttpSession.class.isAssignableFrom(parameterType)) {
 							parameterValues[i] = request.getSession();
 						} else {
-							String parameterValue = request.getParameter(parameter.getName());
-							String typeName = parameter.getType().getName();
-							Object parameterObj = parameterValue;
-							if (parameterObj != null) {
-								if ("java.lang.Integer".equals(typeName)) {
-									parameterObj = Integer.parseInt(parameterValue);
-								}
-							}
-							parameterValues[i] = parameterObj;
+//							String parameterValue = request.getParameter(parameter.getName());
+//							String typeName = parameter.getType().getName();
+//							Object parameterObj = parameterValue;
+//							if (parameterObj != null) {
+//								if ("java.lang.Integer".equals(typeName)) {
+//									parameterObj = Integer.parseInt(parameterValue);
+//								}
+//							}
+//							parameterValues[i] = parameterObj;
 						}
 					}
 					method.setAccessible(true);

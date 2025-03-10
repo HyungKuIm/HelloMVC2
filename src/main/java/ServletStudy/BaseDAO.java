@@ -68,18 +68,19 @@ public abstract class BaseDAO<T> {
     }
 
     protected int executeUpdate(String sql, Object... params)  {
-        boolean inserFlag = false;
-        inserFlag = sql.trim().toLowerCase().startsWith("insert into ");
+        boolean insertFlag = false;
+        insertFlag = sql.trim().toLowerCase().startsWith("insert into ");
         try {
             con = getConn();
-            if (inserFlag) {
-                psmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            if (insertFlag) {
+                psmt = con.prepareStatement(sql, new String[]{"id"});
             } else {
                 psmt = con.prepareStatement(sql);
             }
             setParams(psmt, params);
             int count = psmt.executeUpdate();
-            if (inserFlag) {
+            if (insertFlag) {
+                rs = psmt.getGeneratedKeys();
                 if (rs.next()) {
                     return ((Long)rs.getLong(1)).intValue();
                 }

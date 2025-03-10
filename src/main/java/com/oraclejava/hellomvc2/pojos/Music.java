@@ -10,8 +10,8 @@ public class Music {
     public Music() {
     }
 
-    public Music(Long id, String title, String artist, String album, String genre) {
-        this.id = id;
+    public Music(String title, String artist, String album, String genre) {
+        //this.id = id;
         this.title = title;
         this.artist = artist;
         this.album = album;
@@ -56,5 +56,16 @@ public class Music {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    @Override
+    public String toString() {
+        return "Music{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", artist='" + artist + '\'' +
+                ", album='" + album + '\'' +
+                ", genre='" + genre + '\'' +
+                '}';
     }
 }
