@@ -14,8 +14,22 @@ public class MusicController {
     public String index(HttpServletRequest request) {
         HttpSession session = request.getSession();
 
-        List<Music> musicList = musicService.getMusicList();
+
+        int pageNo;
+        try {
+            pageNo = Integer.parseInt(request.getParameter("pageNo"));
+        } catch (NumberFormatException e) {
+            pageNo = 1;
+        }
+
+        session.setAttribute("pageNo", pageNo);
+
+
+        List<Music> musicList = musicService.getMusicList(pageNo);
         session.setAttribute("musicList", musicList);
+
+        int pageCount = musicService.getPageCount();
+        session.setAttribute("pageCount", pageCount);
 
         return "music/index";
     }

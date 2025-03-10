@@ -1,4 +1,4 @@
-package ServletStudy;
+package com.oraclejava.base;
 
 public interface BeanFactory {
 	

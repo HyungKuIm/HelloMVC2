@@ -41,10 +41,22 @@
                 </c:forEach>
             </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <c:forEach var="i" begin="1" end="${pageCount}">
+                    <li class="page-item"><a class="page-link" href="<c:url value="/music.do?pageNo=${i}"/>">${i}</a></li>
+                </c:forEach>
+
+
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+        <div>
+            <a href="<c:url value="/music.do?operate=addForm"/>">음악 추가</a>
+        </div>
     </div>
-    <div>
-        <a href="<c:url value="/music.do?operate=addForm"/>">음악 추가</a>
-    </div>
+
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

@@ -6,9 +6,10 @@ import java.util.List;
 
 public interface MusicService {
 
-    List<Music> getMusicList();
+    List<Music> getMusicList(Integer pageNo);
     void addMusic(Music music);
     Music getMusicByMid(Long mid);
     void delMusic(Long mid);
     void updateMusic(Music music);
+    Integer getPageCount();
 }
