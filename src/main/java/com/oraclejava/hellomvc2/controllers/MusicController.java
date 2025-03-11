@@ -4,10 +4,14 @@ import com.oraclejava.hellomvc2.pojos.Music;
 import com.oraclejava.hellomvc2.services.MusicService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class MusicController {
+
+    private final static Logger logger = LoggerFactory.getLogger(MusicController.class);
 
     private MusicService musicService;
 
@@ -45,8 +49,26 @@ public class MusicController {
         String genre = request.getParameter("genre");
         String album = request.getParameter("album");
         Music music = new Music(title, artist, album, genre);
-        System.out.println("2:" + music);
+        logger.debug("2:" + music);
         musicService.addMusic(music);
         return "redirect:music.do";
+    }
+
+    public String show(HttpServletRequest request) {
+        Integer musicId = null;
+        try {
+            musicId = Integer.parseInt(request.getParameter("musicId"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        if (musicId != null) {
+            Music music = musicService.getMusicByMid(Long.valueOf(musicId));
+            logger.debug(music.toString());
+            request.setAttribute("music", music);
+            return "music/show";
+        } else {
+            return "error";
+        }
+
     }
 }

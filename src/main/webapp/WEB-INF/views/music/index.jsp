@@ -33,7 +33,7 @@
                 <c:forEach var="m" items="${musicList}">
                 <tr>
                     <th scope="row">${m.id}</th>
-                    <td>${m.title}</td>
+                    <td><a href="<c:url value="/music.do?operate=show&musicId=${m.id}"/>">${m.title}</a></td>
                     <td>${m.artist}</td>
                     <td>${m.album}</td>
                     <td>${m.genre}</td>
@@ -43,13 +43,21 @@
         </table>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item ${pageNo <= 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="<c:url value="/music.do?pageNo=${pageNo-1}"/>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
                 <c:forEach var="i" begin="1" end="${pageCount}">
-                    <li class="page-item"><a class="page-link" href="<c:url value="/music.do?pageNo=${i}"/>">${i}</a></li>
+                    <li class="page-item ${pageNo == i ? 'active' : ''}"><a class="page-link" href="<c:url value="/music.do?pageNo=${i}"/>">${i}</a></li>
                 </c:forEach>
 
 
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item ${pageNo >= pageCount ? 'disabled' : ''}">
+                    <a class="page-link" href="<c:url value="/music.do?pageNo=${pageNo+1}"/>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <div>

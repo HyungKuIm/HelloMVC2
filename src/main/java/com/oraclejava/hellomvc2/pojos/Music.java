@@ -6,6 +6,7 @@ public class Music {
     private String artist;
     private String album;
     private String genre;
+    private String url;
 
     public Music() {
     }
@@ -58,6 +59,14 @@ public class Music {
         this.genre = genre;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "Music{" +
@@ -66,6 +75,7 @@ public class Music {
                 ", artist='" + artist + '\'' +
                 ", album='" + album + '\'' +
                 ", genre='" + genre + '\'' +
+                ", url='" + url + '\'' +
                 '}';
     }
 }
