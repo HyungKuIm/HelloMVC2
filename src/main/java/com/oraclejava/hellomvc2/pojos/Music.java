@@ -1,5 +1,7 @@
 package com.oraclejava.hellomvc2.pojos;
 
+import java.time.LocalDateTime;
+
 public class Music {
     private Long id;
     private String title;
@@ -7,6 +9,7 @@ public class Music {
     private String album;
     private String genre;
     private String url;
+    private LocalDateTime insert_dt;
 
     public Music() {
     }
@@ -65,6 +68,14 @@ public class Music {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public LocalDateTime getInsert_dt() {
+        return insert_dt;
+    }
+
+    public void setInsert_dt(LocalDateTime insert_dt) {
+        this.insert_dt = insert_dt;
     }
 
     @Override

@@ -5,6 +5,9 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,7 +108,13 @@ public abstract class BaseDAO<T> {
             field.setAccessible(true);
             if (propertyValue instanceof BigDecimal) {
                 field.set(obj, ((BigDecimal)propertyValue).longValue());
-            } else {
+            }
+            else if (propertyValue instanceof Timestamp) {
+                Instant instant = Instant.ofEpochMilli(((Timestamp)propertyValue).getTime());
+                LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
+                field.set(obj, localDateTime);
+            }
+            else {
                 field.set(obj, propertyValue);
             }
         } catch (NoSuchFieldException | IllegalAccessException e) {
