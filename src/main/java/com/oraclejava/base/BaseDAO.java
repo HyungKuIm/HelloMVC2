@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseDAO<T> {
-    public final String DRIVER = "oracle.jdbc.driver.OracleDriver";
-    public final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
-    public final String USER = "sora2";
-    public final String PWD = "1234";
+//    public final String DRIVER = "oracle.jdbc.driver.OracleDriver";
+//    public final String URL = "jdbc:oracle:thin:@localhost:1521:xe";
+//    public final String USER = "sora2";
+//    public final String PWD = "1234";
 
     protected Connection con;
     protected PreparedStatement psmt;
@@ -33,14 +33,18 @@ public abstract class BaseDAO<T> {
     }
 
     protected Connection getConn() {
-        try {
-            Class.forName(DRIVER);
-            return DriverManager.getConnection(URL, USER, PWD);
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Class.forName(DRIVER);
+//            return DriverManager.getConnection(URL, USER, PWD);
+//        } catch (ClassNotFoundException | SQLException e) {
+//            e.printStackTrace();
+//        }
 
-        return null;
+        try {
+            return HikariCPDataSource.getDataSource().getConnection();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void close(ResultSet rs, PreparedStatement ps, Connection con) {
